@@ -19,6 +19,5 @@ classifiers = [
 dependencies = [
     "requests>=2.25.1"
 ]
-project.urls]
-"Homepage" = ""
-"Bug Tracker" = ""
+[tool.pytest.ini_options]
+pythonpath = ["src"]
