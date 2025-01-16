@@ -103,8 +103,8 @@ class IEEEBibTeX:
         type_mapping = {
             'journal-article': 'article',
             'proceedings-article': 'inproceedings',
-            'book': 'book',
-            'report': 'techreport'
+            #'book': 'book',
+            #'report': 'techreport'
         }
         
         entry_type = type_mapping.get(pub_info['type'], 'article')
