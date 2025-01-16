@@ -55,6 +55,7 @@ class IEEEBibTeX:
             response = requests.get(crossref_url)
             response.raise_for_status()
             data = response.json()['message']
+            print(data)
             
             # Extract relevant information
             publication_info = {
@@ -123,7 +124,14 @@ class IEEEBibTeX:
             )
         if entry_type == 'inproceedings':
             return self.create_inproceeding(
-
+                citation_key=citation_key,
+                authors=pub_info['authors'],
+                title=pub_info['title'],
+                booktitle=pub_info.get('container-title'),
+                year=pub_info['year'],
+                pages=pub_info.get['pages'],
+                location=pub_info.get['location'],
+                doi=pub_info['doi']
             )
         return self._create_entry(entry_type, citation_key, pub_info)
 
@@ -143,18 +151,17 @@ class IEEEBibTeX:
         }
         return self._create_entry("article", citation_key, fields)
     
-    def create_inproceeding(self, citation_key: str, title: str, authors: str, journal: str, 
-                        year: str, volume: Optional[str] = None, number: Optional[str] = None,
-                        pages: Optional[str] = None, doi: Optional[str] = None) -> str:
-        """Generate a BibTeX entry for a journal article."""
+    def create_inproceeding(self, citation_key: str, title: str, authors: str, 
+                        booktitle: str, year: str, pages: Optional[str] = None,
+                        location: Optional[str] = None, doi: Optional[str] = None) -> str:
+        """Generate a BibTeX entry for a journal inproceeding."""
         fields = {
             "author": self._format_authors(authors),
             "title": title,
-            "journal": journal,
+            "booktitle": booktitle,
             "year": year,
-            "volume": volume,
-            "number": number,
             "pages": pages,
+            "address": location,
             "doi": doi
         }
-        return self._create_entry("article", citation_key, fields)
+        return self._create_entry("inproceeding", citation_key, fields)
